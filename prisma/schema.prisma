@@ -9,3 +9,56 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  password_hash String
+  created_at    DateTime @default(now())
+  org           Org      @relation(fields: [org_id], references: [id])
+  org_id        String
+}
+
+model Org {
+  id         String   @id @default(uuid())
+  name       String
+  address    String
+  zipcode    String
+  whatsapp   String
+  created_at DateTime @default(now())
+
+  User User[]
+  Pet  Pet[]
+}
+
+model Pet {
+  id                 String           @id @default(uuid())
+  name               String
+  about              String?
+  age                String
+  size               String
+  energy_level       String?
+  independence_level String?
+  created_at         DateTime         @default(now())
+  org                Org              @relation(fields: [org_id], references: [id])
+  org_id             String
+  PetImage           PetImage[]
+  PetRequirement     PetRequirement[]
+}
+
+model PetImage {
+  id         String   @id @default(uuid())
+  url        String
+  created_at DateTime @default(now())
+  pet        Pet      @relation(fields: [pet_id], references: [id])
+  pet_id     String
+}
+
+model PetRequirement {
+  id         String   @id @default(uuid())
+  name       String
+  pet        Pet      @relation(fields: [pet_id], references: [id])
+  pet_id     String
+  created_at DateTime @default(now())
+}
