@@ -18,6 +18,8 @@ model User {
   created_at    DateTime @default(now())
   org           Org      @relation(fields: [org_id], references: [id])
   org_id        String
+
+  @@map("users")
 }
 
 model Org {
@@ -30,6 +32,8 @@ model Org {
 
   User User[]
   Pet  Pet[]
+
+  @@map("orgs")
 }
 
 model Pet {
@@ -45,6 +49,8 @@ model Pet {
   org_id             String
   PetImage           PetImage[]
   PetRequirement     PetRequirement[]
+
+  @@map("pets")
 }
 
 model PetImage {
@@ -53,6 +59,8 @@ model PetImage {
   created_at DateTime @default(now())
   pet        Pet      @relation(fields: [pet_id], references: [id])
   pet_id     String
+
+  @@map("pet_images")
 }
 
 model PetRequirement {
@@ -61,4 +69,6 @@ model PetRequirement {
   pet        Pet      @relation(fields: [pet_id], references: [id])
   pet_id     String
   created_at DateTime @default(now())
+
+  @@map("pet_requirements")
 }
