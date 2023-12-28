@@ -2,6 +2,7 @@ import { InMemoryOrgRepository } from '@/repositories/in-memory/in-memory-org-re
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { CreateOrgWithUserUseCase } from './create-org-with-user'
+import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 
 let userRepository: InMemoryUserRepository
 let orgRepository: InMemoryOrgRepository
@@ -30,5 +31,35 @@ describe('Create Org with user', () => {
 
     expect(org.id).toEqual(expect.any(String))
     expect(org.name).toEqual('John Doe')
+  })
+
+  it('should not be able to create a new org with user with email already taken', async () => {
+    await sut.execute({
+      user: {
+        name: 'John Doe',
+        email: 'johndoe@example.com',
+        password: '123456',
+      },
+      org: {
+        address: 'Rua 1',
+        zipcode: '12345678',
+        whatsapp: '11912345678',
+      },
+    })
+
+    await expect(() =>
+      sut.execute({
+        user: {
+          name: 'John Doe',
+          email: 'johndoe@example.com',
+          password: '123456',
+        },
+        org: {
+          address: 'Rua 2',
+          zipcode: '12345678',
+          whatsapp: '11912345678',
+        },
+      }),
+    ).rejects.toBeInstanceOf(UserAlreadyExistsError)
   })
 })
