@@ -3,6 +3,7 @@ import { UserRepository } from '@/repositories/interfaces/user-repository'
 import { Org } from '@prisma/client'
 import { hash } from 'bcryptjs'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error'
+import { MissingRequiredFields } from './errors/missing-required-fields-erros'
 
 interface CreateOrgWithUserUseCaseRequest {
   user: {
@@ -32,6 +33,14 @@ export class CreateOrgWithUserUseCase {
     user,
     org,
   }: CreateOrgWithUserUseCaseRequest): Promise<CreateOrgWithUserUseCaseResponse> {
+    if (!org.address || org.address === undefined) {
+      throw new MissingRequiredFields()
+    }
+
+    if (!org.whatsapp || org.whatsapp === undefined) {
+      throw new MissingRequiredFields()
+    }
+
     const userAlreadyExists = await this.userRepository.findByEmail(user.email)
 
     if (userAlreadyExists) {
