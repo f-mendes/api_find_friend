@@ -26,6 +26,7 @@ describe('Create Org with user', () => {
       org: {
         address: 'Rua 1',
         zipcode: '12345678',
+        city: 'São Paulo',
         whatsapp: '11912345678',
       },
     })
@@ -44,6 +45,7 @@ describe('Create Org with user', () => {
       org: {
         address: 'Rua 1',
         zipcode: '12345678',
+        city: 'São Paulo',
         whatsapp: '11912345678',
       },
     })
@@ -58,6 +60,7 @@ describe('Create Org with user', () => {
         org: {
           address: 'Rua 2',
           zipcode: '12345678',
+          city: 'São Paulo',
           whatsapp: '11912345678',
         },
       }),
@@ -75,6 +78,7 @@ describe('Create Org with user', () => {
         org: {
           address: '',
           zipcode: '12345678',
+          city: 'São Paulo',
           whatsapp: '11912345678',
         },
       }),
@@ -92,6 +96,7 @@ describe('Create Org with user', () => {
         org: {
           address: 'Rua 1',
           zipcode: '12345678',
+          city: 'São Paulo',
           whatsapp: '',
         },
       }),

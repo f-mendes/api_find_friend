@@ -14,6 +14,7 @@ interface CreateOrgWithUserUseCaseRequest {
   org: {
     name?: string
     address: string
+    city: string
     zipcode: string
     whatsapp: string
   }
@@ -50,6 +51,7 @@ export class CreateOrgWithUserUseCase {
     const orgCreated = await this.orgRepository.create({
       name: org.name || user.name,
       address: org.address,
+      city: org.city,
       zipcode: org.zipcode,
       whatsapp: org.whatsapp,
     })

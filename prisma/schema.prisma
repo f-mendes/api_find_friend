@@ -26,6 +26,7 @@ model Org {
   id         String   @id @default(uuid())
   name       String
   address    String
+  city       String
   zipcode    String
   whatsapp   String
   created_at DateTime @default(now())
