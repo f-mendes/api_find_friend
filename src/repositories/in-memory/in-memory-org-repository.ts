@@ -20,4 +20,10 @@ export class InMemoryOrgRepository implements OrgRepository {
 
     return org
   }
+
+  async listByCity(city: string) {
+    const orgs = this.orgs.filter((org) => org.city === city)
+
+    return orgs
+  }
 }
