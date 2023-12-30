@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import { PetRepository } from '../interfaces/pet-repository'
+import { PetRepository, PetFilters } from '../interfaces/pet-repository'
 import { Pet, Prisma } from '@prisma/client'
 
 export class InMemoryPetRepository implements PetRepository {
@@ -48,5 +48,27 @@ export class InMemoryPetRepository implements PetRepository {
     })
 
     return pets.flat()
+  }
+
+  async searchByFields(pets: Pet[], fields: PetFilters) {
+    const petsFound = pets.filter((pet) => {
+      const petFields = Object.keys(fields) as Array<keyof PetFilters>
+
+      return petFields.every((field) => {
+        if (!fields[field]) return true
+
+        return pet[field] === fields[field]
+      })
+    })
+
+    return petsFound
+  }
+
+  async getById(id: string) {
+    const pet = this.pets.find((pet) => pet.id === id)
+
+    if (!pet) return null
+
+    return pet
   }
 }
