@@ -59,4 +59,8 @@ describe('List Pet By City', () => {
 
     expect(pets.length).toBe(2)
   })
+
+  it('should throw if city is not provided', async () => {
+    await expect(sut.execute({ city: '' })).rejects.toThrow('City is required')
+  })
 })

@@ -16,6 +16,10 @@ export class ListPetByCityUseCase {
   ) {}
 
   async execute(data: ListPetByCityRequest): Promise<ListPetByCityResponse> {
+    if (!data.city) {
+      throw new Error('City is required')
+    }
+
     const orgs = await this.orgRepository.listByCity(data.city)
     const orgs_id = orgs.map((org) => org.id)
 
