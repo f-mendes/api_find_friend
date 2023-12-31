@@ -50,13 +50,18 @@ export class InMemoryPetRepository implements PetRepository {
     return pets.flat()
   }
 
-  async searchByFields(pets: Pet[], fields: PetFilters) {
+  async searchByFields(fields: PetFilters, pets: Pet[]) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { city, ...fieldsWithoutCity } = fields
+
     const petsFound = pets.filter((pet) => {
-      const petFields = Object.keys(fields) as Array<keyof PetFilters>
+      const petFields = Object.keys(fieldsWithoutCity) as Array<
+        keyof PetFilters
+      >
 
       return petFields.every((field) => {
         if (!fields[field]) return true
-
+        // @ts-expect-error: Unreachable code error
         return pet[field] === fields[field]
       })
     })

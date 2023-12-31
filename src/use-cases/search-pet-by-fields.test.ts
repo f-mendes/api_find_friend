@@ -11,7 +11,7 @@ describe('Search Pet By Fields', () => {
   beforeEach(() => {
     petRepository = new InMemoryPetRepository()
     orgRepository = new InMemoryOrgRepository()
-    sut = new SearchPetByFieldsUseCase(orgRepository, petRepository)
+    sut = new SearchPetByFieldsUseCase(petRepository)
   })
 
   it('should be able to search pets by fields', async () => {
@@ -50,13 +50,15 @@ describe('Search Pet By Fields', () => {
     })
 
     const { pets } = await sut.execute({
-      city: 'São Paulo',
       fields: {
+        city: 'São Paulo',
         age: '',
         size: 'P',
         energy_level: 'low',
         independence_level: '',
       },
+      in_memory: true,
+      org_repository: orgRepository,
     })
 
     expect(pets.length).toBe(1)

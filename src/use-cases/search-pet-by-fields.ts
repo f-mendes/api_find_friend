@@ -6,8 +6,9 @@ import {
 import { Pet } from '@prisma/client'
 
 interface SearchPetByFieldsRequest {
-  city: string
   fields: PetFilters
+  in_memory?: boolean
+  org_repository?: OrgRepository
 }
 
 interface SearchPetByFieldsResponse {
@@ -15,28 +16,29 @@ interface SearchPetByFieldsResponse {
 }
 
 export class SearchPetByFieldsUseCase {
-  constructor(
-    private orgRepository: OrgRepository,
-    private petRepository: PetRepository,
-  ) {}
+  constructor(private petRepository: PetRepository) {}
 
   async execute(
     data: SearchPetByFieldsRequest,
   ): Promise<SearchPetByFieldsResponse> {
-    if (!data.city) {
+    if (!data.fields.city) {
       throw new Error('City is required')
     }
 
-    const orgs = await this.orgRepository.listByCity(data.city)
-    const orgs_id = orgs.map((org) => org.id)
+    if (data.in_memory && data.org_repository) {
+      const orgs = await data.org_repository.listByCity(data.fields.city)
+      const orgs_id = orgs.map((org) => org.id)
 
-    const petsByCity = await this.petRepository.listByOrg(orgs_id)
+      const petsByCity = await this.petRepository.listByOrg(orgs_id)
 
-    const pets = await this.petRepository.searchByFields(
-      petsByCity,
-      data.fields,
-    )
+      const pets = await this.petRepository.searchByFields(
+        data.fields,
+        petsByCity,
+      )
+      return { pets }
+    }
 
+    const pets = await this.petRepository.searchByFields(data.fields)
     return { pets }
   }
 }
