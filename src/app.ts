@@ -4,10 +4,26 @@ import { env } from './env'
 import { orgsRoutes } from './http/controllers/orgs/routes'
 import { petsRoutes } from './http/controllers/pets/routes'
 import multipart from '@fastify/multipart'
+import { fastifyJwt } from '@fastify/jwt'
+import { fastifyCookie } from '@fastify/cookie'
+import { userRoutes } from './http/controllers/users/routes'
 
 export const app = fastify()
 
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+  cookie: {
+    cookieName: 'refreshToken',
+    signed: false,
+  },
+  sign: {
+    expiresIn: '10m',
+  },
+})
+app.register(fastifyCookie)
 app.register(multipart)
+
+app.register(userRoutes)
 app.register(orgsRoutes)
 app.register(petsRoutes)
 
