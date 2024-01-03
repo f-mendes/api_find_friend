@@ -35,10 +35,12 @@
   "dependencies": {
     "@fastify/cookie": "^9.2.0",
     "@fastify/jwt": "^7.2.4",
+    "@fastify/multipart": "8.0.0",
     "@prisma/client": "^5.7.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.1",
     "fastify": "^4.25.2",
+    "fastify-multer": "2.0.3",
     "npm-run-all": "4.1.5",
     "zod": "^3.22.4"
   }

@@ -19,14 +19,8 @@ describe('Create Pet', () => {
       age: 'Filhote',
       size: 'Pequeno',
       org_id: 'org-1',
-      PetImage: [
-        { pet_id: 'uuid', url: 'url_da_imagem_1' },
-        { pet_id: 'uuid', url: 'url_da_imagem_2' },
-      ],
-      PetRequirement: [
-        { pet_id: 'uuid', name: 'Requisito 1' },
-        { pet_id: 'uuid', name: 'Requisito 2' },
-      ],
+      petImage: [{ url: 'url_da_imagem_1' }, { url: 'url_da_imagem_2' }],
+      petRequirement: [{ name: 'Requisito 1' }, { name: 'Requisito 2' }],
     })
 
     expect(pet.id).toEqual(expect.any(String))

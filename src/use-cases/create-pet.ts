@@ -10,8 +10,8 @@ interface CreatePetRequest {
   energy_level?: string
   independence_level?: string
   org_id: string
-  PetImage?: Array<Prisma.PetImageUncheckedCreateInput>
-  PetRequirement?: Array<Prisma.PetRequirementUncheckedCreateInput>
+  petImage?: Array<Prisma.PetImageUncheckedCreateWithoutPetInput>
+  petRequirement?: Array<Prisma.PetRequirementUncheckedCreateWithoutPetInput>
 }
 
 interface CreatePetResponse {
@@ -35,10 +35,10 @@ export class CreatePetUseCase {
       independence_level: data.independence_level,
       org_id: data.org_id,
       PetImage: {
-        create: data.PetImage,
+        create: data.petImage,
       },
       PetRequirement: {
-        create: data.PetRequirement,
+        create: data.petRequirement,
       },
     })
 
