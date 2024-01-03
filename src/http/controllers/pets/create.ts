@@ -8,7 +8,6 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     about: z.string().optional(),
     age: z.string(),
     size: z.string(),
-    org_id: z.string().optional(),
     energy_level: z.string().optional(),
     independence_level: z.string().optional(),
     petRequirement: z
@@ -28,12 +27,13 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     }),
   )
 
+  const { org_id } = request.user
+
   const {
     name,
     about,
     age,
     size,
-    org_id: id,
     energy_level,
     independence_level,
     petRequirement: requirements,
@@ -60,8 +60,6 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       }
     })
   }
-
-  const org_id = id || 'a5783af5-742a-4c34-8e00-79b6d4efc7ea'
 
   const createPet = makeCreatePet()
 
