@@ -9,7 +9,9 @@ export function uploadImages() {
       }
 
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
-      cb(null, file.fieldname + '-' + uniqueSuffix)
+      const fileExt = file.originalname.split('.').pop() // Obtém a extensão do arquivo
+      const filename = `${file.fieldname}-${uniqueSuffix}.${fileExt}`
+      cb(null, filename)
     },
   })
 

@@ -1,12 +1,14 @@
-import { PetRepository } from '@/repositories/interfaces/pet-repository'
-import { Pet } from '@prisma/client'
+import {
+  PetRepository,
+  PetWithInclude,
+} from '@/repositories/interfaces/pet-repository'
 
 interface GetPetByIdRequest {
   id: string
 }
 
 interface GetPetByIdResponse {
-  pet: Pet | null
+  pet: PetWithInclude | null
 }
 
 export class GetPetByIdUseCase {

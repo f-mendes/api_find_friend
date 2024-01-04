@@ -1,5 +1,9 @@
 import { randomUUID } from 'node:crypto'
-import { PetRepository, PetFilters } from '../interfaces/pet-repository'
+import {
+  PetRepository,
+  PetFilters,
+  PetWithInclude,
+} from '../interfaces/pet-repository'
 import { Pet, Prisma } from '@prisma/client'
 
 export class InMemoryPetRepository implements PetRepository {
@@ -74,6 +78,6 @@ export class InMemoryPetRepository implements PetRepository {
 
     if (!pet) return null
 
-    return pet
+    return pet as PetWithInclude
   }
 }
