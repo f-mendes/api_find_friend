@@ -21,7 +21,7 @@ export class PrismaPetRepository implements PetRepository {
     return pets
   }
 
-  async searchByFields(fields: PetFilters) {
+  async searchByFields(fields: PetFilters, page: number) {
     const orgs = await prisma.org.findMany({
       where: {
         city: fields.city,
@@ -34,6 +34,8 @@ export class PrismaPetRepository implements PetRepository {
             energy_level: fields.energy_level,
             independence_level: fields.independence_level,
           },
+          take: 5,
+          skip: (page - 1) * 5,
         },
       },
     })
