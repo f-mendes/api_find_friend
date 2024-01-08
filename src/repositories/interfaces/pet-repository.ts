@@ -17,6 +17,10 @@ export interface PetWithInclude extends Pet {
 export interface PetRepository {
   create(data: Prisma.PetUncheckedCreateInput): Promise<Pet>
   listByOrg(orgs_id: Array<string>): Promise<Pet[]>
-  searchByFields(fields: PetFilters, pets?: Array<Pet>): Promise<Pet[]>
+  searchByFields(
+    fields: PetFilters,
+    page: number,
+    pets?: Array<Pet>,
+  ): Promise<Pet[]>
   getById(id: string): Promise<PetWithInclude | null>
 }

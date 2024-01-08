@@ -7,6 +7,7 @@ import { Pet } from '@prisma/client'
 
 interface SearchPetByFieldsRequest {
   fields: PetFilters
+  page: number
   in_memory?: boolean
   org_repository?: OrgRepository
 }
@@ -33,12 +34,13 @@ export class SearchPetByFieldsUseCase {
 
       const pets = await this.petRepository.searchByFields(
         data.fields,
+        data.page,
         petsByCity,
       )
       return { pets }
     }
 
-    const pets = await this.petRepository.searchByFields(data.fields)
+    const pets = await this.petRepository.searchByFields(data.fields, data.page)
     return { pets }
   }
 }
