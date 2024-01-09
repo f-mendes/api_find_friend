@@ -54,7 +54,7 @@ export class InMemoryPetRepository implements PetRepository {
     return pets.flat()
   }
 
-  async searchByFields(fields: PetFilters, pets: Pet[]) {
+  async searchByFields(fields: PetFilters, page: number, pets: Pet[]) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { city, ...fieldsWithoutCity } = fields
 
