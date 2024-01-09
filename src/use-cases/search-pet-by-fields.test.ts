@@ -57,6 +57,7 @@ describe('Search Pet By Fields', () => {
         energy_level: 'low',
         independence_level: '',
       },
+      page: 1,
       in_memory: true,
       org_repository: orgRepository,
     })
