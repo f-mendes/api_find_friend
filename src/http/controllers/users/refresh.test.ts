@@ -11,7 +11,7 @@ describe('Refresh Token (e2e)', () => {
     await app.close()
   })
 
-  it.only('should be able to refresh a token', async () => {
+  it('should be able to refresh a token', async () => {
     await request(app.server)
       .post('/orgs')
       .send({
